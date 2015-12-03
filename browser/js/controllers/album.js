@@ -37,5 +37,17 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope, StatsFactory, Pl
   $scope.playing = PlayerFactory.isPlaying;
   $scope.currentSong = PlayerFactory.getCurrentSong;
 
+  //move to album controller
+  $rootScope.skip = function(val){
+    var thisSong = PlayerFactory.getCurrentSong();
+    if (!thisSong) return;
+    
+    var idx = $scope.album.songs.indexOf(thisSong);
+    if(val + idx > $scope.album.songs.length-1) idx = 0;
+    else if(val + idx < 0) idx = $scope.album.songs.length-1;
+    else idx += val;
+
+    PlayerFactory.start($scope.album.songs[idx]);
+  };
 
 });

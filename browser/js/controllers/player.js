@@ -1,5 +1,8 @@
 app.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory){
-  // main toggle
+
+  $scope.playing = PlayerFactory.isPlaying;
+  $scope.currentSong = PlayerFactory.getCurrentSong;
+
   $scope.toggle = function (song) {
     if (PlayerFactory.isPlaying()) PlayerFactory.pause();
     else {
@@ -15,6 +18,13 @@ app.controller('PlayerCtrl', function($scope, $rootScope, PlayerFactory){
     $scope.currentSong = PlayerFactory.getCurrentSong;
   };
 
-  $scope.playing = PlayerFactory.isPlaying;
-  $scope.currentSong = PlayerFactory.getCurrentSong;
+  $scope.next = function () {
+    PlayerFactory.next();
+  };
+  $scope.prev = function () {
+    PlayerFactory.previous();
+  };
+
 });
+
+

@@ -35,22 +35,16 @@ app.factory('PlayerFactory', function($q, $rootScope){
 		return currentSong;
 	};
 	playerObj.next = function(){
-		skip(1);
+		$rootScope.skip(1);
 	};
 	playerObj.previous = function(){
-		skip(-1);
+		$rootScope.skip(-1);
 	}; 
 	playerObj.getProgress = function(){
 		$rootScope.$digest()
 		100 * audio.currentTime / audio.duration;
 	};
-	//move to album controller
-	// playerObj.skip = function(val){
-	// 	if (!this.currentSong) return;
-	//     var idx = $scope.album.songs.indexOf($scope.currentSong);
-	//     idx = mod( (idx + (val || 1)), $scope.album.songs.length );
-	// 	start($scope.album.songs[idx]);
-	// 	};
+
 
 
 	return playerObj;
