@@ -6,34 +6,33 @@ app.factory('PlayerFactory', function($q, $rootScope){
 		$rootScope.$digest();
 	})
 	var playerObj = {};
-	playerObj.playing = false;
-	playerObj.currentSong;
+	var playing = false;
+	var currentSong = null;
+
 
 	playerObj.start = function(song){
 		// stop existing audio (e.g. other song) in any case
-	   	this.pause();
-	    this.playing = true;
+	    playing = true;
 	    // resume current song
-	    if (song === this.currentSong) return audio.play();
 	    // enable loading new song
-	    this.currentSong = song;
+	    currentSong = song;
 	    audio.src = song.audioUrl;
 	    audio.load();
 	    audio.play();
 	};
 	playerObj.pause = function(){
 		audio.pause();
-    	this.playing = false;
+    	playing = false;
 	};
 	playerObj.resume = function(){
-		this.playing = true;
+		playing = true;
 		audio.play();
 	};
 	playerObj.isPlaying = function(){
-		return this.playing;
+		return playing;
 	};
 	playerObj.getCurrentSong = function(){
-		return this.currentSong;
+		return currentSong;
 	};
 	playerObj.next = function(){
 		skip(1);

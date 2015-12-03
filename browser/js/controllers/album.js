@@ -17,9 +17,10 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope, StatsFactory, Pl
     });
   }).catch(console.error.bind(console));
 
+
   // main toggle
   $scope.toggle = function (song) {
-    if ($scope.playing) PlayerFactory.pause();
+    if (PlayerFactory.isPlaying()) PlayerFactory.pause();
     else {
       if (song === PlayerFactory.getCurrentSong()) {
           PlayerFactory.resume();
@@ -28,34 +29,39 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope, StatsFactory, Pl
           PlayerFactory.start(song)
       }
     }
-  }
-
-  // incoming events (from Player, toggle, or skip)
-  $scope.$on('pause', pause);
-  $scope.$on('play', play);
-  $scope.$on('next', next);
-  $scope.$on('prev', prev);
-
-  // functionality
-  function pause () {
-    $scope.playing = false;
-  }
-  function play (event, song){
-    $scope.playing = true;
-    $scope.currentSong = song;
+    $scope.playing = PlayerFactory.isPlaying();
+    $scope.currentSong = PlayerFactory.getCurrentSong();
   };
 
-  // a "true" modulo that wraps negative to the top of the range
-  function mod (num, m) { return ((num%m)+m)%m; };
+  $scope.playing = PlayerFactory.isPlaying;
+  $scope.currentSong = PlayerFactory.getCurrentSong;
 
-  // jump `val` spots in album (negative to go back)
-  function skip (val) {
-    if (!$scope.currentSong) return;
-    var idx = $scope.album.songs.indexOf($scope.currentSong);
-    idx = mod( (idx + (val || 1)), $scope.album.songs.length );
-    $rootScope.$broadcast('play', $scope.album.songs[idx]);
-  };
-  function next () { skip(1); };
-  function prev () { skip(-1); };
+  // // incoming events (from Player, toggle, or skip)
+  // $scope.$on('pause', pause);
+  // $scope.$on('play', play);
+  // $scope.$on('next', next);
+  // $scope.$on('prev', prev);
+
+  // // functionality
+  // function pause () {
+  //   $scope.playing = false;
+  // }
+  // function play (event, song){
+  //   $scope.playing = true;
+  //   $scope.currentSong = song;
+  // };
+
+  // // a "true" modulo that wraps negative to the top of the range
+  // function mod (num, m) { return ((num%m)+m)%m; };
+
+  // // jump `val` spots in album (negative to go back)
+  // function skip (val) {
+  //   if (!$scope.currentSong) return;
+  //   var idx = $scope.album.songs.indexOf($scope.currentSong);
+  //   idx = mod( (idx + (val || 1)), $scope.album.songs.length );
+  //   $rootScope.$broadcast('play', $scope.album.songs[idx]);
+  // };
+  // function next () { skip(1); };
+  // function prev () { skip(-1); };
 
 });
