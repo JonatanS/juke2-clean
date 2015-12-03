@@ -2,6 +2,7 @@ app.factory('PlayerFactory', function($q, $rootScope){
 	var audio = document.createElement('audio');
 	audio.addEventListener('timeupdate', function() {
 		var curTime = playerObj.getProgress();
+		console.log(curTime);
 		$rootScope.progress = curTime;
 		$rootScope.$digest();
 	})
@@ -41,8 +42,7 @@ app.factory('PlayerFactory', function($q, $rootScope){
 		$rootScope.skip(-1);
 	}; 
 	playerObj.getProgress = function(){
-		$rootScope.$digest()
-		100 * audio.currentTime / audio.duration;
+		return 100 * audio.currentTime / audio.duration;
 	};
 
 

@@ -50,4 +50,13 @@ app.controller('AlbumCtrl', function($scope, $http, $rootScope, StatsFactory, Pl
     PlayerFactory.start($scope.album.songs[idx]);
   };
 
+
+  //emitters and listeners:
+
+    $rootScope.$on("viewAlbums", function(){
+      $scope.showAlbums = !$scope.showAlbums;
+      console.log($scope.showAlbums);
+    })
+
+
 });
